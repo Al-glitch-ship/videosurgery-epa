@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, item, domain, milestone FROM topic_criteria WHERE item LIKE '%anatomia%' OR item LIKE '%identifica%' OR item LIKE '%anomalia%' OR item LIKE '%conhecimento%' OR item LIKE '%nervos%' ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT id, item, domain, milestone FROM topic_criteria WHERE item LIKE '%anatomia%' OR item LIKE '%identifica%' OR item LIKE '%anomalia%' OR item LIKE '%conhecimento%' OR item LIKE '%nervos%' ORDER BY id;",
+  "rows": [
+    {
+      "id": "3",
+      "item": "Demonstra conhecimento da anatomia inguinal",
+      "domain": "Preparação e Planejamento",
+      "milestone": "MK2"
+    },
+    {
+      "id": "7",
+      "item": "Identifica e preserva nervos inguinais",
+      "domain": "Acesso e Exposição",
+      "milestone": "MK2"
+    },
+    {
+      "id": "9",
+      "item": "Identifica o tipo de hérnia (direta/indireta/femoral)",
+      "domain": "Acesso e Exposição",
+      "milestone": "MK2"
+    },
+    {
+      "id": "12",
+      "item": "Identifica anomalias anatômicas",
+      "domain": "Dissecção e Redução",
+      "milestone": "MK2"
+    },
+    {
+      "id": "30",
+      "item": "Identifica corretamente o espaço retropúbico ou transobturatório",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "MK2"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\titem\tdomain\tmilestone\n3\tDemonstra conhecimento da anatomia inguinal\tPreparação e Planejamento\tMK2\n7\tIdentifica e preserva nervos inguinais\tAcesso e Exposição\tMK2\n9\tIdentifica o tipo de hérnia (direta/indireta/femoral)\tAcesso e Exposição\tMK2\n12\tIdentifica anomalias anatômicas\tDissecção e Redução\tMK2\n30\tIdentifica corretamente o espaço retropúbico ou transobturatório\tIncisão e Dissecção Vaginal\tMK2\n",
+  "stderr": "",
+  "execution_time_ms": 368
+}

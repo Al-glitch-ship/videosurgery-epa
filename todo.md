@@ -1,0 +1,51 @@
+# VideoSurgery EPA - TODO
+
+- [x] Database schema (9 tables: users, topic_lists, topic_criteria, folders, videos, folder_invites, folder_access, evaluations, notifications)
+- [x] Server database helpers (db.ts with all CRUD operations)
+- [x] Server tRPC routers (auth, surgical, folders, videos, invites, evaluations, topicLists, notifications)
+- [x] Server upload routes (multer-based video upload with S3 storage)
+- [x] Server auth middleware (JWT cookie-based authentication)
+- [x] Server OAuth routes (Manus OAuth integration)
+- [x] Shared constants and surgical EPA criteria data
+- [x] Client pages: LandingPage, DashboardPage, CreateFolderPage, FolderDetailPage, VideoPlayerPage, InvitesPage, StatsPage, AdminPage, InviteAcceptPage
+- [x] Client components: Layout, UI components (shadcn/ui)
+- [x] Client auth context and tRPC integration
+- [x] Client styles (globals.css with surgical theme using OKLCH)
+- [x] Install additional dependencies (cookie-parser, multer, uuid, recharts, etc.)
+- [x] Run database migrations
+- [x] Write vitest tests (22 tests passing)
+- [x] Fix TypeScript errors (0 errors)
+- [x] Google Fonts (Inter + Playfair Display) added to index.html
+- [x] Recriar landing page exatamente como a referência original
+- [x] Auditar todas as funcionalidades conforme especificações completas
+- [x] Remover limites de tamanho de upload de vídeo
+- [x] Fornecer guia de gerenciamento da plataforma
+- [x] Corrigir upload de vídeos - botão está desabilitado e mostra "em desenvolvimento"
+- [x] Implementar seleção de arquivo, drag & drop, barra de progresso e envio real ao S3
+- [x] Garantir que não há limite de tamanho no upload
+- [x] Permitir que todos os usuários com acesso à pasta possam fazer upload de vídeos (não apenas o owner)
+- [x] Corrigir lógica isOwner no VideoPlayerPage - mostra "Proprietário" para todos os usuários
+- [x] Implementar checkboxes de critérios EPA para avaliação de vídeos
+- [x] Implementar formulário completo de avaliação com scores, entrustment level e feedback
+- [x] Implementar estatísticas por procedimento cirúrgico (Hérnia, Apendicite, Sling, Colecistectomia, etc.)
+- [x] Adicionar opção de excluir ambientes próprios (não compartilhados) no Dashboard
+- [x] Criar notificações automáticas quando vídeo é adicionado a pasta compartilhada
+- [x] Criar notificações quando convite é enviado/aceito
+- [x] Implementar ícone de sino com contador de não-lidas no header
+- [x] Implementar painel/dropdown de notificações com lista e marcar como lida
+- [x] Atualizar shared/surgical.ts com milestones ACGME por item, 8 fenótipos (incluindo EXECUTOR_MECANICO e gatilho SBP1<40%)
+- [x] Criar hook useClustering.ts com clusterização por domínio e por milestone ACGME
+- [x] Criar componente EvaluationReport.tsx com dialog de relatório completo
+- [x] Integrar relatório no VideoPlayerPage (botão "Ver Relatório" após avaliação)
+- [x] Corrigir scroll na avaliação de vídeo (critérios ficam cortados)
+- [x] Implementar notificações no Layout (ícone sino + painel dropdown)
+- [x] Bug: Relatório de fenotipagem EPA/ACGME não aparece após avaliação de vídeo - investigar e corrigir
+- [x] Bug: Relatório de fenotipagem desaparece ao sair da página - reconstruir a partir de avaliações persistidas
+- [x] Permitir que proprietário veja relatório de cada avaliação recebida
+- [x] Permitir que avaliador reveja relatório ao revisitar vídeo já avaliado
+- [x] Bug: Milestones ACGME mostram 0/0 pontos - critérios não estão mapeados aos milestones
+- [x] Corrigir mapeamento de milestones no surgical.ts e useClustering.ts
+- [x] Implementar backfill automático de milestones na inicialização do servidor
+- [x] Adicionar endpoint admin para backfill manual de milestones
+- [x] Sincronizar heurística de resolução de milestones entre backend e frontend
+- [x] Corrigir heurística para distinguir itens de ação (fecha/sutura) de itens de conhecimento (anatomia)

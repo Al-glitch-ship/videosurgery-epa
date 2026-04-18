@@ -1,0 +1,16 @@
+node_modules
+.git
+uploads
+*.py
+*.md
+*.txt
+*.log
+test-*
+poc_*
+gcp_*
+deploy_*
+.env
+.env.*
+server_log.txt
+Relatorio_EPA_Taina.txt
+export_para_vertex.txt

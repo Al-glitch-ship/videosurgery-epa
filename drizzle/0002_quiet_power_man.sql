@@ -1,0 +1,1 @@
+ALTER TABLE `topic_criteria` ADD `milestone` varchar(16);

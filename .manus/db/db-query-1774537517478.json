@@ -1,0 +1,325 @@
+{
+  "query": "SELECT id, item, domain, milestone, topic_list_id FROM topic_criteria ORDER BY topic_list_id, domain_order, item_order LIMIT 50;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT id, item, domain, milestone, topic_list_id FROM topic_criteria ORDER BY topic_list_id, domain_order, item_order LIMIT 50;",
+  "rows": [
+    {
+      "id": "1",
+      "item": "Posiciona o paciente adequadamente",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "2",
+      "item": "Confirma lado da hérnia e marcação",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "3",
+      "item": "Demonstra conhecimento da anatomia inguinal",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "4",
+      "item": "Planeja abordagem (aberta vs laparoscópica)",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "5",
+      "item": "Realiza timeout e verifica material de tela",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "6",
+      "item": "Realiza incisão na localização correta",
+      "domain": "Acesso e Exposição",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "7",
+      "item": "Identifica e preserva nervos inguinais",
+      "domain": "Acesso e Exposição",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "8",
+      "item": "Expõe o canal inguinal adequadamente",
+      "domain": "Acesso e Exposição",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "9",
+      "item": "Identifica o tipo de hérnia (direta/indireta/femoral)",
+      "domain": "Acesso e Exposição",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "10",
+      "item": "Reduz o conteúdo herniário",
+      "domain": "Dissecção e Redução",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "11",
+      "item": "Disseca o saco herniário adequadamente",
+      "domain": "Dissecção e Redução",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "12",
+      "item": "Identifica anomalias anatômicas",
+      "domain": "Dissecção e Redução",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "13",
+      "item": "Controla sangramento de forma eficiente",
+      "domain": "Dissecção e Redução",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "14",
+      "item": "Posiciona a tela de forma correta",
+      "domain": "Reparo e Fixação",
+      "milestone": "PC2",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "15",
+      "item": "Fixa a tela sem tensão excessiva",
+      "domain": "Reparo e Fixação",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "16",
+      "item": "Reconstrói o canal inguinal",
+      "domain": "Reparo e Fixação",
+      "milestone": "PC3",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "17",
+      "item": "Verifica ausência de recorrência",
+      "domain": "Reparo e Fixação",
+      "milestone": "SBP1",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "18",
+      "item": "Verifica hemostasia",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "19",
+      "item": "Fecha planos anatômicos adequadamente",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "20",
+      "item": "Fecha pele com técnica apropriada",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "21",
+      "item": "Documenta achados e técnica utilizada",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "1"
+    },
+    {
+      "id": "22",
+      "item": "Posiciona a paciente em litotomia adequada",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "23",
+      "item": "Verifica material do sling e instrumental específico",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "24",
+      "item": "Realiza antissepsia adequada do campo operatório",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "25",
+      "item": "Confirma indicação e tipo de sling a ser utilizado",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "26",
+      "item": "Realiza sondagem vesical",
+      "domain": "Preparação e Planejamento",
+      "milestone": "PC2",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "27",
+      "item": "Realiza hidrodissecção da parede vaginal anterior",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "28",
+      "item": "Executa incisão vaginal na localização correta",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "29",
+      "item": "Disseca lateralmente até o ramo isquiopúbico",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "30",
+      "item": "Identifica corretamente o espaço retropúbico ou transobturatório",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "31",
+      "item": "Mantém plano de dissecção adequado",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "32",
+      "item": "Posiciona as agulhas/trocarte de forma correta",
+      "domain": "Passagem do Sling",
+      "milestone": "PC2",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "33",
+      "item": "Realiza a passagem do sling com técnica segura",
+      "domain": "Passagem do Sling",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "34",
+      "item": "Verifica simetria bilateral do sling",
+      "domain": "Passagem do Sling",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "35",
+      "item": "Ajusta tensão do sling adequadamente (sem tensão excessiva)",
+      "domain": "Passagem do Sling",
+      "milestone": "PC3",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "36",
+      "item": "Realiza cistoscopia de controle quando indicado",
+      "domain": "Passagem do Sling",
+      "milestone": "PC2",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "37",
+      "item": "Confirma integridade vesical (cistoscopia)",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "38",
+      "item": "Verifica posicionamento adequado do sling",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "39",
+      "item": "Ajusta tensão final do sling",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "40",
+      "item": "Testa continência com manobra de Valsalva",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "41",
+      "item": "Recorta excesso de tela adequadamente",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "42",
+      "item": "Fecha a incisão vaginal com sutura adequada",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "43",
+      "item": "Realiza hemostasia satisfatória",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "44",
+      "item": "Verifica sondagem vesical pós-operatória",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    },
+    {
+      "id": "45",
+      "item": "Documenta o procedimento e material utilizado",
+      "domain": "Finalização",
+      "milestone": "SBP1",
+      "topic_list_id": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\titem\tdomain\tmilestone\ttopic_list_id\n1\tPosiciona o paciente adequadamente\tPreparação e Planejamento\tPC2\t1\n2\tConfirma lado da hérnia e marcação\tPreparação e Planejamento\tPC2\t1\n3\tDemonstra conhecimento da anatomia inguinal\tPreparação e Planejamento\tPC2\t1\n4\tPlaneja abordagem (aberta vs laparoscópica)\tPreparação e Planejamento\tPC2\t1\n5\tRealiza timeout e verifica material de tela\tPreparação e Planejamento\tPC2\t1\n6\tRealiza incisão na localização correta\tAcesso e Exposição\tPC3\t1\n7\tIdentifica e preserva nervos inguinais\tAcesso e Exposição\tPC3\t1\n8\tExpõe o canal inguinal adequadamente\tAcesso e Exposição\tPC3\t1\n9\tIdentifica o tipo de hérnia (direta/indireta/femoral)\tAcesso e Exposição\tPC3\t1\n10\tReduz o conteúdo herniário\tDissecção e Redução\tPC3\t1\n11\tDisseca o saco herniário adequadamente\tDissecção e Redução\tPC3\t1\n12\tIdentifica anomalias anatômicas\tDissecção e Redução\tPC3\t1\n13\tControla sangramento de forma eficiente\tDissecção e Redução\tPC3\t1\n14\tPosiciona a tela de forma correta\tReparo e Fixação\tPC2\t1\n15\tFixa a tela sem tensão excessiva\tReparo e Fixação\tPC3\t1\n16\tReconstrói o canal inguinal\tReparo e Fixação\tPC3\t1\n17\tVerifica ausência de recorrência\tReparo e Fixação\tSBP1\t1\n18\tVerifica hemostasia\tFinalização\tSBP1\t1\n19\tFecha planos anatômicos adequadamente\tFinalização\tSBP1\t1\n20\tFecha pele com técnica apropriada\tFinalização\tSBP1\t1\n21\tDocumenta achados e técnica utilizada\tFinalização\tSBP1\t1\n22\tPosiciona a paciente em litotomia adequada\tPreparação e Planejamento\tPC2\t2\n23\tVerifica material do sling e instrumental específico\tPreparação e Planejamento\tPC2\t2\n24\tRealiza antissepsia adequada do campo operatório\tPreparação e Planejamento\tPC2\t2\n25\tConfirma indicação e tipo de sling a ser utilizado\tPreparação e Planejamento\tPC2\t2\n26\tRealiza sondagem vesical\tPreparação e Planejamento\tPC2\t2\n27\tRealiza hidrodissecção da parede vaginal anterior\tIncisão e Dissecção Vaginal\tPC3\t2\n28\tExecuta incisão vaginal na localização correta\tIncisão e Dissecção Vaginal\tPC3\t2\n29\tDisseca lateralmente até o ramo isquiopúbico\tIncisão e Dissecção Vaginal\tPC3\t2\n30\tIdentifica corretamente o espaço retropúbico ou transobturatório\tIncisão e Dissecção Vaginal\tPC3\t2\n31\tMantém plano de dissecção adequado\tIncisão e Dissecção Vaginal\tPC3\t2\n32\tPosiciona as agulhas/trocarte de forma correta\tPassagem do Sling\tPC2\t2\n33\tRealiza a passagem do sling com técnica segura\tPassagem do Sling\tPC3\t2\n34\tVerifica simetria bilateral do sling\tPassagem do Sling\tPC3\t2\n35\tAjusta tensão do sling adequadamente (sem tensão excessiva)\tPassagem do Sling\tPC3\t2\n36\tRealiza cistoscopia de controle quando indicado\tPassagem do Sling\tPC2\t2\n37\tConfirma integridade vesical (cistoscopia)\tVerificação e Ajuste\tSBP1\t2\n38\tVerifica posicionamento adequado do sling\tVerificação e Ajuste\tSBP1\t2\n39\tAjusta tensão final do sling\tVerificação e Ajuste\tSBP1\t2\n40\tTesta continência com manobra de Valsalva\tVerificação e Ajuste\tSBP1\t2\n41\tRecorta excesso de tela adequadamente\tFinalização\tSBP1\t2\n42\tFecha a incisão vaginal com sutura adequada\tFinalização\tSBP1\t2\n43\tRealiza hemostasia satisfatória\tFinalização\tSBP1\t2\n44\tVerifica sondagem vesical pós-operatória\tFinalização\tSBP1\t2\n45\tDocumenta o procedimento e material utilizado\tFinalização\tSBP1\t2\n",
+  "stderr": "",
+  "execution_time_ms": 345
+}

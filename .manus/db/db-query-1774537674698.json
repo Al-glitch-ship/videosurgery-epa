@@ -1,0 +1,16 @@
+{
+  "query": "SELECT f.id as folder_id, f.procedure_col, f.topic_list_id, f.area FROM folders f WHERE f.id = 2;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT f.id as folder_id, f.procedure_col, f.topic_list_id, f.area FROM folders f WHERE f.id = 2;",
+  "rows": [
+    {
+      "folder_id": "2",
+      "procedure_col": "inguinal_hernia",
+      "topic_list_id": "1",
+      "area": "CIRURGIA_GERAL"
+    }
+  ],
+  "messages": [],
+  "stdout": "folder_id\tprocedure_col\ttopic_list_id\tarea\n2\tinguinal_hernia\t1\tCIRURGIA_GERAL\n",
+  "stderr": "",
+  "execution_time_ms": 391
+}

@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, item, domain, milestone FROM topic_criteria WHERE milestone = 'MK2' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT id, item, domain, milestone FROM topic_criteria WHERE milestone = 'MK2' LIMIT 5;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 351
+}

@@ -1,0 +1,26 @@
+{
+  "query": "SELECT milestone, COUNT(*) as cnt FROM topic_criteria GROUP BY milestone ORDER BY milestone;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT milestone, COUNT(*) as cnt FROM topic_criteria GROUP BY milestone ORDER BY milestone;",
+  "rows": [
+    {
+      "milestone": "MK2",
+      "cnt": "6"
+    },
+    {
+      "milestone": "PC2",
+      "cnt": "9"
+    },
+    {
+      "milestone": "PC3",
+      "cnt": "15"
+    },
+    {
+      "milestone": "SBP1",
+      "cnt": "15"
+    }
+  ],
+  "messages": [],
+  "stdout": "milestone\tcnt\nMK2\t6\nPC2\t9\nPC3\t15\nSBP1\t15\n",
+  "stderr": "",
+  "execution_time_ms": 366
+}

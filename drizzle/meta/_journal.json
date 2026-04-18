@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1774309173346,
+      "tag": "0000_ancient_patch",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1774309521528,
+      "tag": "0001_old_peter_parker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1774536567410,
+      "tag": "0002_quiet_power_man",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "query": "SELECT tc.id, tc.item, tc.domain, tc.milestone, tl.procedure_col FROM topic_criteria tc JOIN topic_lists tl ON tc.topic_list_id = tl.id LIMIT 30;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT tc.id, tc.item, tc.domain, tc.milestone, tl.procedure_col FROM topic_criteria tc JOIN topic_lists tl ON tc.topic_list_id = tl.id LIMIT 30;",
+  "rows": [
+    {
+      "id": "1",
+      "item": "Posiciona o paciente adequadamente",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "2",
+      "item": "Confirma lado da hérnia e marcação",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "3",
+      "item": "Demonstra conhecimento da anatomia inguinal",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "4",
+      "item": "Planeja abordagem (aberta vs laparoscópica)",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "5",
+      "item": "Realiza timeout e verifica material de tela",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "6",
+      "item": "Realiza incisão na localização correta",
+      "domain": "Acesso e Exposição",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "7",
+      "item": "Identifica e preserva nervos inguinais",
+      "domain": "Acesso e Exposição",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "8",
+      "item": "Expõe o canal inguinal adequadamente",
+      "domain": "Acesso e Exposição",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "9",
+      "item": "Identifica o tipo de hérnia (direta/indireta/femoral)",
+      "domain": "Acesso e Exposição",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "10",
+      "item": "Reduz o conteúdo herniário",
+      "domain": "Dissecção e Redução",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "11",
+      "item": "Disseca o saco herniário adequadamente",
+      "domain": "Dissecção e Redução",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "12",
+      "item": "Identifica anomalias anatômicas",
+      "domain": "Dissecção e Redução",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "13",
+      "item": "Controla sangramento de forma eficiente",
+      "domain": "Dissecção e Redução",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "14",
+      "item": "Posiciona a tela de forma correta",
+      "domain": "Reparo e Fixação",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "15",
+      "item": "Fixa a tela sem tensão excessiva",
+      "domain": "Reparo e Fixação",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "16",
+      "item": "Reconstrói o canal inguinal",
+      "domain": "Reparo e Fixação",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "17",
+      "item": "Verifica ausência de recorrência",
+      "domain": "Reparo e Fixação",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "18",
+      "item": "Verifica hemostasia",
+      "domain": "Finalização",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "19",
+      "item": "Fecha planos anatômicos adequadamente",
+      "domain": "Finalização",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "20",
+      "item": "Fecha pele com técnica apropriada",
+      "domain": "Finalização",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "21",
+      "item": "Documenta achados e técnica utilizada",
+      "domain": "Finalização",
+      "milestone": "NULL",
+      "procedure_col": "inguinal_hernia"
+    },
+    {
+      "id": "22",
+      "item": "Posiciona a paciente em litotomia adequada",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "23",
+      "item": "Verifica material do sling e instrumental específico",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "24",
+      "item": "Realiza antissepsia adequada do campo operatório",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "25",
+      "item": "Confirma indicação e tipo de sling a ser utilizado",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "26",
+      "item": "Realiza sondagem vesical",
+      "domain": "Preparação e Planejamento",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "27",
+      "item": "Realiza hidrodissecção da parede vaginal anterior",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "28",
+      "item": "Executa incisão vaginal na localização correta",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "29",
+      "item": "Disseca lateralmente até o ramo isquiopúbico",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    },
+    {
+      "id": "30",
+      "item": "Identifica corretamente o espaço retropúbico ou transobturatório",
+      "domain": "Incisão e Dissecção Vaginal",
+      "milestone": "NULL",
+      "procedure_col": "sling_vaginal"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\titem\tdomain\tmilestone\tprocedure_col\n1\tPosiciona o paciente adequadamente\tPreparação e Planejamento\tNULL\tinguinal_hernia\n2\tConfirma lado da hérnia e marcação\tPreparação e Planejamento\tNULL\tinguinal_hernia\n3\tDemonstra conhecimento da anatomia inguinal\tPreparação e Planejamento\tNULL\tinguinal_hernia\n4\tPlaneja abordagem (aberta vs laparoscópica)\tPreparação e Planejamento\tNULL\tinguinal_hernia\n5\tRealiza timeout e verifica material de tela\tPreparação e Planejamento\tNULL\tinguinal_hernia\n6\tRealiza incisão na localização correta\tAcesso e Exposição\tNULL\tinguinal_hernia\n7\tIdentifica e preserva nervos inguinais\tAcesso e Exposição\tNULL\tinguinal_hernia\n8\tExpõe o canal inguinal adequadamente\tAcesso e Exposição\tNULL\tinguinal_hernia\n9\tIdentifica o tipo de hérnia (direta/indireta/femoral)\tAcesso e Exposição\tNULL\tinguinal_hernia\n10\tReduz o conteúdo herniário\tDissecção e Redução\tNULL\tinguinal_hernia\n11\tDisseca o saco herniário adequadamente\tDissecção e Redução\tNULL\tinguinal_hernia\n12\tIdentifica anomalias anatômicas\tDissecção e Redução\tNULL\tinguinal_hernia\n13\tControla sangramento de forma eficiente\tDissecção e Redução\tNULL\tinguinal_hernia\n14\tPosiciona a tela de forma correta\tReparo e Fixação\tNULL\tinguinal_hernia\n15\tFixa a tela sem tensão excessiva\tReparo e Fixação\tNULL\tinguinal_hernia\n16\tReconstrói o canal inguinal\tReparo e Fixação\tNULL\tinguinal_hernia\n17\tVerifica ausência de recorrência\tReparo e Fixação\tNULL\tinguinal_hernia\n18\tVerifica hemostasia\tFinalização\tNULL\tinguinal_hernia\n19\tFecha planos anatômicos adequadamente\tFinalização\tNULL\tinguinal_hernia\n20\tFecha pele com técnica apropriada\tFinalização\tNULL\tinguinal_hernia\n21\tDocumenta achados e técnica utilizada\tFinalização\tNULL\tinguinal_hernia\n22\tPosiciona a paciente em litotomia adequada\tPreparação e Planejamento\tNULL\tsling_vaginal\n23\tVerifica material do sling e instrumental específico\tPreparação e Planejamento\tNULL\tsling_vaginal\n24\tRealiza antissepsia adequada do campo operatório\tPreparação e Planejamento\tNULL\tsling_vaginal\n25\tConfirma indicação e tipo de sling a ser utilizado\tPreparação e Planejamento\tNULL\tsling_vaginal\n26\tRealiza sondagem vesical\tPreparação e Planejamento\tNULL\tsling_vaginal\n27\tRealiza hidrodissecção da parede vaginal anterior\tIncisão e Dissecção Vaginal\tNULL\tsling_vaginal\n28\tExecuta incisão vaginal na localização correta\tIncisão e Dissecção Vaginal\tNULL\tsling_vaginal\n29\tDisseca lateralmente até o ramo isquiopúbico\tIncisão e Dissecção Vaginal\tNULL\tsling_vaginal\n30\tIdentifica corretamente o espaço retropúbico ou transobturatório\tIncisão e Dissecção Vaginal\tNULL\tsling_vaginal\n",
+  "stderr": "",
+  "execution_time_ms": 365
+}

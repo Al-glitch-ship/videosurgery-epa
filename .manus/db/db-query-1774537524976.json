@@ -1,0 +1,24 @@
+{
+  "query": "SELECT tl.id, tl.procedure_col, tl.area, COUNT(tc.id) as criteria_count, GROUP_CONCAT(DISTINCT tc.milestone) as milestones FROM topic_lists tl LEFT JOIN topic_criteria tc ON tc.topic_list_id = tl.id GROUP BY tl.id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT tl.id, tl.procedure_col, tl.area, COUNT(tc.id) as criteria_count, GROUP_CONCAT(DISTINCT tc.milestone) as milestones FROM topic_lists tl LEFT JOIN topic_criteria tc ON tc.topic_list_id = tl.id GROUP BY tl.id;",
+  "rows": [
+    {
+      "id": "1",
+      "procedure_col": "inguinal_hernia",
+      "area": "CIRURGIA_GERAL",
+      "criteria_count": "21",
+      "milestones": "PC2,PC3,SBP1"
+    },
+    {
+      "id": "2",
+      "procedure_col": "sling_vaginal",
+      "area": "UROLOGIA",
+      "criteria_count": "24",
+      "milestones": "PC2,PC3,SBP1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tprocedure_col\tarea\tcriteria_count\tmilestones\n1\tinguinal_hernia\tCIRURGIA_GERAL\t21\tPC2,PC3,SBP1\n2\tsling_vaginal\tUROLOGIA\t24\tPC2,PC3,SBP1\n",
+  "stderr": "",
+  "execution_time_ms": 366
+}

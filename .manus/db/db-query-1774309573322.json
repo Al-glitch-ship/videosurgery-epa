@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `__drizzle_migrations` (\n  `id` serial PRIMARY KEY,\n  `hash` text NOT NULL,\n  `created_at` bigint\n);\nINSERT INTO `__drizzle_migrations` (`hash`, `created_at`) VALUES ('0001_old_peter_parker', UNIX_TIMESTAMP() * 1000);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute CREATE TABLE IF NOT EXISTS `__drizzle_migrations` (\n  `id` serial PRIMARY KEY,\n  `hash` text NOT NULL,\n  `created_at` bigint\n);\nINSERT INTO `__drizzle_migrations` (`hash`, `created_at`) VALUES ('0001_old_peter_parker', UNIX_TIMESTAMP() * 1000);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 434
+}

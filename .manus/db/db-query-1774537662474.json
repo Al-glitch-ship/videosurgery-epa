@@ -1,0 +1,26 @@
+{
+  "query": "SELECT id, video_id, folder_id, total_score, max_possible_score, entrustment_level FROM evaluations LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT id, video_id, folder_id, total_score, max_possible_score, entrustment_level FROM evaluations LIMIT 5;",
+  "rows": [
+    {
+      "id": "1",
+      "video_id": "1",
+      "folder_id": "2",
+      "total_score": "92",
+      "max_possible_score": "105",
+      "entrustment_level": "5"
+    },
+    {
+      "id": "30001",
+      "video_id": "30001",
+      "folder_id": "30001",
+      "total_score": "57",
+      "max_possible_score": "95",
+      "entrustment_level": "4"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tvideo_id\tfolder_id\ttotal_score\tmax_possible_score\tentrustment_level\n1\t1\t2\t92\t105\t5\n30001\t30001\t30001\t57\t95\t4\n",
+  "stderr": "",
+  "execution_time_ms": 355
+}

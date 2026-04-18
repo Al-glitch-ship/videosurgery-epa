@@ -1,0 +1,100 @@
+{
+  "query": "SELECT id, item, domain, milestone FROM topic_criteria WHERE milestone = 'SBP1' ORDER BY id LIMIT 15;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT id, item, domain, milestone FROM topic_criteria WHERE milestone = 'SBP1' ORDER BY id LIMIT 15;",
+  "rows": [
+    {
+      "id": "5",
+      "item": "Realiza timeout e verifica material de tela",
+      "domain": "Preparação e Planejamento",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "17",
+      "item": "Verifica ausência de recorrência",
+      "domain": "Reparo e Fixação",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "18",
+      "item": "Verifica hemostasia",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "20",
+      "item": "Fecha pele com técnica apropriada",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "21",
+      "item": "Documenta achados e técnica utilizada",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "23",
+      "item": "Verifica material do sling e instrumental específico",
+      "domain": "Preparação e Planejamento",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "37",
+      "item": "Confirma integridade vesical (cistoscopia)",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "38",
+      "item": "Verifica posicionamento adequado do sling",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "39",
+      "item": "Ajusta tensão final do sling",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "40",
+      "item": "Testa continência com manobra de Valsalva",
+      "domain": "Verificação e Ajuste",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "41",
+      "item": "Recorta excesso de tela adequadamente",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "42",
+      "item": "Fecha a incisão vaginal com sutura adequada",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "43",
+      "item": "Realiza hemostasia satisfatória",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "44",
+      "item": "Verifica sondagem vesical pós-operatória",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    },
+    {
+      "id": "45",
+      "item": "Documenta o procedimento e material utilizado",
+      "domain": "Finalização",
+      "milestone": "SBP1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\titem\tdomain\tmilestone\n5\tRealiza timeout e verifica material de tela\tPreparação e Planejamento\tSBP1\n17\tVerifica ausência de recorrência\tReparo e Fixação\tSBP1\n18\tVerifica hemostasia\tFinalização\tSBP1\n20\tFecha pele com técnica apropriada\tFinalização\tSBP1\n21\tDocumenta achados e técnica utilizada\tFinalização\tSBP1\n23\tVerifica material do sling e instrumental específico\tPreparação e Planejamento\tSBP1\n37\tConfirma integridade vesical (cistoscopia)\tVerificação e Ajuste\tSBP1\n38\tVerifica posicionamento adequado do sling\tVerificação e Ajuste\tSBP1\n39\tAjusta tensão final do sling\tVerificação e Ajuste\tSBP1\n40\tTesta continência com manobra de Valsalva\tVerificação e Ajuste\tSBP1\n41\tRecorta excesso de tela adequadamente\tFinalização\tSBP1\n42\tFecha a incisão vaginal com sutura adequada\tFinalização\tSBP1\n43\tRealiza hemostasia satisfatória\tFinalização\tSBP1\n44\tVerifica sondagem vesical pós-operatória\tFinalização\tSBP1\n45\tDocumenta o procedimento e material utilizado\tFinalização\tSBP1\n",
+  "stderr": "",
+  "execution_time_ms": 387
+}

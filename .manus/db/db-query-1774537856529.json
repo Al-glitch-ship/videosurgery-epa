@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, item, milestone FROM topic_criteria WHERE id = 19;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3kpmXQEhQh9QUB5.9201f3ecb012 --database dyAwmFLrC4fePdcS2zLLQv --execute SELECT id, item, milestone FROM topic_criteria WHERE id = 19;",
+  "rows": [
+    {
+      "id": "19",
+      "item": "Fecha planos anatômicos adequadamente",
+      "milestone": "SBP1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\titem\tmilestone\n19\tFecha planos anatômicos adequadamente\tSBP1\n",
+  "stderr": "",
+  "execution_time_ms": 349
+}
