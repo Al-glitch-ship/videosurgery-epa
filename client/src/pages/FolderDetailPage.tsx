@@ -608,56 +608,57 @@ export function FolderDetailPage() {
                   if (!selectedFile || !videoTitle.trim()) return;
                   setIsUploading(true);
                   setUploadProgress(0);
-
+ 
                   try {
-                    // Upload file to S3 via /api/upload/:folderId
-                    const formData = new FormData();
-                    formData.append("video", selectedFile);
+                    // 1. Pedir uma URL Assinada para o Google Cloud (Via Expressa)
+                    const { uploadUrl, path: gcsPath } = await utils.client.videos.getUploadUrl.mutate({
+                      folderId,
+                      filename: selectedFile.name,
+                      contentType: selectedFile.type || "video/mp4"
+                    });
 
+                    // 2. Upload DIRETO do navegador para o Google Cloud (Bypass de limite 413)
                     const xhr = new XMLHttpRequest();
-                    const uploadPromise = new Promise<any>((resolve, reject) => {
+                    const uploadPromise = new Promise<void>((resolve, reject) => {
                       xhr.upload.addEventListener("progress", (event) => {
                         if (event.lengthComputable) {
                           const percent = Math.round((event.loaded / event.total) * 100);
                           setUploadProgress(percent);
                         }
                       });
+                      
                       xhr.addEventListener("load", () => {
                         if (xhr.status >= 200 && xhr.status < 300) {
-                          resolve(JSON.parse(xhr.responseText));
+                          resolve();
                         } else {
-                          reject(new Error(xhr.responseText || "Erro no upload"));
+                          reject(new Error(`Erro no upload direto: ${xhr.statusText}`));
                         }
                       });
-                      xhr.addEventListener("error", () => reject(new Error("Erro de rede")));
-                      xhr.addEventListener("abort", () => reject(new Error("Upload cancelado")));
-                      xhr.open("POST", `/api/upload/${folderId}`);
-                      xhr.withCredentials = true;
-                      xhr.send(formData);
+                      
+                      xhr.addEventListener("error", () => reject(new Error("Erro de rede no upload direto")));
+                      xhr.open("PUT", uploadUrl);
+                      xhr.setRequestHeader("Content-Type", selectedFile.type || "video/mp4");
+                      xhr.send(selectedFile);
                     });
 
-                    const result = await uploadPromise;
+                    await uploadPromise;
 
-                    if (result.success && result.file) {
-                      // Create video record via tRPC
-                      await createVideoMutation.mutateAsync({
-                        folderId,
-                        title: videoTitle.trim(),
-                        description: videoDescription.trim() || undefined,
-                        localPath: result.file.url,
-                        mimeType: result.file.mimeType,
-                        sizeBytes: result.file.size,
-                      });
+                    // 3. Registrar o vídeo no banco de dados com o caminho do GCS
+                    await createVideoMutation.mutateAsync({
+                      folderId,
+                      title: videoTitle.trim(),
+                      description: videoDescription.trim() || undefined,
+                      localPath: gcsPath, // Agora salvamos o caminho relativo do GCS
+                      mimeType: selectedFile.type,
+                      sizeBytes: selectedFile.size,
+                    });
 
-                      toast.success("Vídeo enviado com sucesso!");
-                      setUploadDialogOpen(false);
-                      setSelectedFile(null);
-                      setUploadProgress(0);
-                      setVideoTitle("");
-                      setVideoDescription("");
-                    } else {
-                      throw new Error("Resposta inesperada do servidor");
-                    }
+                    toast.success("Vídeo enviado com sucesso para a nuvem!");
+                    setUploadDialogOpen(false);
+                    setSelectedFile(null);
+                    setUploadProgress(0);
+                    setVideoTitle("");
+                    setVideoDescription("");
                   } catch (error: any) {
                     console.error("Upload error:", error);
                     toast.error(error.message || "Erro ao fazer upload do vídeo");

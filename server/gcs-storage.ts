@@ -1,114 +1,94 @@
-/**
- * Google Cloud Storage - Módulo de armazenamento seguro para vídeos cirúrgicos.
- * Condição 1: Todos os vídeos ficam privados, acessíveis apenas via Signed URLs temporárias.
- * Condição 2: Pay-per-use — cobra apenas pelo armazenamento efetivo.
- */
+import { Storage } from "@google-cloud/storage";
 
 const BUCKET_NAME = process.env.GCS_BUCKET || "spheric-mesh-493602-k8-videos";
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
+// Inicializa o cliente GCS
+// Em produção (Cloud Run), ele usa as credenciais automáticas do Service Account
+const storage = new Storage();
+
 /**
- * Upload de arquivo para o Google Cloud Storage via REST API.
- * Usa Application Default Credentials (ADC) do Cloud Run.
+ * Gera uma Signed URL para UPLOAD direto do navegador para o GCS.
+ * Isso resolve o erro 413 (Request Entity Too Large).
  */
-export async function uploadToGCS(
-  fileBuffer: Buffer,
+export async function getSignedUploadUrl(
   destinationPath: string,
   contentType: string = "video/mp4"
-): Promise<{ bucket: string; path: string; gcsUri: string }> {
+): Promise<{ uploadUrl: string; publicUrl: string }> {
   if (!IS_PRODUCTION) {
-    // Em dev, simula o upload retornando um path local
-    console.log(`[GCS-DEV] Simulando upload: ${destinationPath}`);
-    return { bucket: BUCKET_NAME, path: destinationPath, gcsUri: `gs://${BUCKET_NAME}/${destinationPath}` };
+    // Mock para desenvolvimento local
+    return {
+      uploadUrl: `http://localhost:3000/api/mock-upload?path=${destinationPath}`,
+      publicUrl: `/api/videos/stream/${destinationPath.split("/").pop()}`,
+    };
   }
 
-  // Importação dinâmica para não crashar em dev
-  let GoogleAuth;
-  try {
-    const authModule = await import("google-auth-library");
-    GoogleAuth = authModule.GoogleAuth;
-  } catch {
-    throw new Error("google-auth-library não instalado.");
-  }
+  const bucket = storage.bucket(BUCKET_NAME);
+  const file = bucket.file(destinationPath);
 
-  const auth = new GoogleAuth({ scopes: "https://www.googleapis.com/auth/cloud-platform" });
-  const client = await auth.getClient();
-  const tokenRes = await client.getAccessToken();
-
-  const encodedPath = encodeURIComponent(destinationPath);
-  const url = `https://storage.googleapis.com/upload/storage/v1/b/${BUCKET_NAME}/o?uploadType=media&name=${encodedPath}`;
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${tokenRes.token}`,
-      "Content-Type": contentType,
-    },
-    body: fileBuffer,
+  // Gera URL de upload (PUT) válida por 15 minutos
+  const [uploadUrl] = await file.getSignedUrl({
+    version: "v4",
+    action: "write",
+    expires: Date.now() + 15 * 60 * 1000,
+    contentType,
   });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`GCS upload failed (${response.status}): ${errText}`);
-  }
-
   return {
-    bucket: BUCKET_NAME,
-    path: destinationPath,
-    gcsUri: `gs://${BUCKET_NAME}/${destinationPath}`,
+    uploadUrl,
+    publicUrl: `/api/videos/stream/${destinationPath}`,
   };
 }
 
 /**
- * Gera uma Signed URL temporária para streaming seguro do vídeo.
- * A URL expira em 1 hora (Condição 1: Segurança).
+ * Gera uma Signed URL para STREAMING (leitura) seguro.
  */
 export async function getSignedStreamUrl(objectPath: string): Promise<string> {
   if (!IS_PRODUCTION) {
     return `/api/videos/stream/${objectPath.split("/").pop()}`;
   }
 
-  let GoogleAuth;
-  try {
-    const authModule = await import("google-auth-library");
-    GoogleAuth = authModule.GoogleAuth;
-  } catch {
-    throw new Error("google-auth-library não instalado.");
-  }
+  const bucket = storage.bucket(BUCKET_NAME);
+  const file = bucket.file(objectPath);
 
-  const auth = new GoogleAuth({ scopes: "https://www.googleapis.com/auth/cloud-platform" });
-  const client = await auth.getClient();
-  const tokenRes = await client.getAccessToken();
+  // Gera URL de leitura (GET) válida por 1 hora
+  const [url] = await file.getSignedUrl({
+    version: "v4",
+    action: "read",
+    expires: Date.now() + 60 * 60 * 1000,
+  });
 
-  // Usar URL de acesso direto com token (simpler than V4 signing for Cloud Run SA)
-  const encodedPath = encodeURIComponent(objectPath);
-  return `https://storage.googleapis.com/${BUCKET_NAME}/${encodedPath}?access_token=${tokenRes.token}`;
+  return url;
 }
 
 /**
  * Deleta um objeto do Cloud Storage.
  */
 export async function deleteFromGCS(objectPath: string): Promise<void> {
-  if (!IS_PRODUCTION) {
-    console.log(`[GCS-DEV] Simulando delete: ${objectPath}`);
-    return;
-  }
-
-  let GoogleAuth;
   try {
-    const authModule = await import("google-auth-library");
-    GoogleAuth = authModule.GoogleAuth;
-  } catch {
-    return;
+    const bucket = storage.bucket(BUCKET_NAME);
+    const file = bucket.file(objectPath);
+    await file.delete();
+  } catch (err) {
+    console.error(`Erro ao deletar do GCS: ${objectPath}`, err);
   }
+}
 
-  const auth = new GoogleAuth({ scopes: "https://www.googleapis.com/auth/cloud-platform" });
-  const client = await auth.getClient();
-  const tokenRes = await client.getAccessToken();
+/**
+ * Módulo legando para compatibilidade (Buffer upload - não recomendado para vídeos grandes)
+ */
+export async function uploadToGCS(
+  fileBuffer: Buffer,
+  destinationPath: string,
+  contentType: string = "video/mp4"
+): Promise<{ bucket: string; path: string; gcsUri: string }> {
+  const bucket = storage.bucket(BUCKET_NAME);
+  const file = bucket.file(destinationPath);
+  await file.save(fileBuffer, { contentType });
 
-  const encodedPath = encodeURIComponent(objectPath);
-  await fetch(`https://storage.googleapis.com/storage/v1/b/${BUCKET_NAME}/o/${encodedPath}`, {
-    method: "DELETE",
-    headers: { "Authorization": `Bearer ${tokenRes.token}` },
-  });
+  return {
+    bucket: BUCKET_NAME,
+    path: destinationPath,
+    gcsUri: `gs://${BUCKET_NAME}/${destinationPath}`,
+  };
 }

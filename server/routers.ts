@@ -242,6 +242,25 @@ export const appRouter = router({
 
   // ─── Videos ────────────────────────────────────────────────────────────────
   videos: router({
+    getUploadUrl: protectedProcedure
+      .input(z.object({ 
+        folderId: z.number(), 
+        filename: z.string(),
+        contentType: z.string().optional()
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await assertFolderAccess(input.folderId, ctx.user.id);
+        
+        const ext = input.filename.split(".").pop() || "mp4";
+        const path = `videos/${nanoid()}.${ext}`;
+        
+        const { uploadUrl, publicUrl } = await import("./gcs-storage").then(m => 
+          m.getSignedUploadUrl(path, input.contentType)
+        );
+        
+        return { uploadUrl, publicUrl, path };
+      }),
+
     list: protectedProcedure
       .input(z.object({ folderId: z.number() }))
       .query(async ({ ctx, input }) => {
