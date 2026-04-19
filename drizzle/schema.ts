@@ -1,6 +1,7 @@
 import {
   boolean,
   int,
+  bigint,
   json,
   mysqlEnum,
   mysqlTable,
@@ -84,8 +85,8 @@ export const videos = mysqlTable("videos", {
   s3Url: text("s3_url"),
   localPath: text("local_path"),
   mimeType: varchar("mime_type", { length: 128 }),
-  sizeBytes: int("size_bytes"),
-  durationSeconds: int("duration_seconds"),
+  sizeBytes: bigint("size_bytes", { mode: "number" }),
+  durationSeconds: bigint("duration_seconds", { mode: "number" }),
   thumbnailUrl: text("thumbnail_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),

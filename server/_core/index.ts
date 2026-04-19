@@ -9,7 +9,7 @@ import { registerUploadRoutes } from "../upload";
 import { registerVertexAiRoutes } from "../vertex-ai";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
-import { backfillMilestones } from "../db";
+import { backfillMilestones, syncSchema } from "../db";
 import { securityMiddleware } from "./security";
 
 function isPortAvailable(port: number): Promise<boolean> {
@@ -79,6 +79,14 @@ async function startServer() {
 
   server.listen(port, async () => {
     console.log(`Server running on http://localhost:${port}/`);
+    
+    // Sincroniza schema para suportar vídeos grandes (BIGINT)
+    try {
+      await syncSchema();
+    } catch (err) {
+      console.warn("[Startup] Schema sync failed (non-critical):", err);
+    }
+
     // Auto-backfill milestones for criteria that have NULL milestone
     try {
       const result = await backfillMilestones();

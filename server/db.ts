@@ -750,3 +750,20 @@ export async function backfillMilestones(): Promise<{ updated: number; total: nu
   console.log(`[Backfill] Updated ${updated}/${allCriteria.length} criteria with milestones`);
   return { updated, total: allCriteria.length };
 }
+
+/**
+ * Ajusta o schema do banco de dados em tempo de execução para suportar arquivos grandes.
+ */
+export async function syncSchema(): Promise<void> {
+  if (IS_DEV_NO_DB) return;
+  const d = await db();
+  try {
+    console.log("[Database] Verificando compatibilidade de tamanho de arquivo...");
+    // Altera as colunas para BIGINT para suportar vídeos > 2GB (5.9GB no caso do Dr. Alê)
+    await d.execute(sql`ALTER TABLE videos MODIFY COLUMN size_bytes BIGINT`);
+    await d.execute(sql`ALTER TABLE videos MODIFY COLUMN duration_seconds BIGINT`);
+    console.log("[Database] Colunas de tamanho atualizadas para BIGINT com sucesso.");
+  } catch (err) {
+    console.warn("[Database] Aviso ao sincronizar schema (pode ser que já esteja atualizado):", err);
+  }
+}
