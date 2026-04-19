@@ -10,6 +10,7 @@ import { InvitesPage } from "@/pages/InvitesPage";
 import { StatsPage } from "@/pages/StatsPage";
 import { AdminPage } from "@/pages/AdminPage";
 import { InviteAcceptPage } from "@/pages/InviteAcceptPage";
+import { LoginPage } from "@/pages/LoginPage";
 
 function App() {
   const { user, isLoading } = useAuth();
@@ -27,6 +28,7 @@ function App() {
     return (
       <Switch>
         <Route path="/invite/:token" component={InviteAcceptPage} />
+        <Route path="/login" component={LoginPage} />
         <Route path="/" component={LandingPage} />
         <Route path="*" component={LandingPage} />
       </Switch>

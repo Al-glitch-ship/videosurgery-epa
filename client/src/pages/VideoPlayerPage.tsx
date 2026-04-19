@@ -267,7 +267,8 @@ export function VideoPlayerPage() {
 
   const checkedCount = Object.values(checkedCriteria).filter(Boolean).length;
   const totalCriteria = criteria.length;
-  const videoSrc = video.s3Url || (video as any).localPath || undefined;
+  // Prioriza a URL assinada (nuvem), depois caminhos locais
+  const videoSrc = (video as any).url || video.s3Url || (video as any).localPath || undefined;
 
   // ═══════════════════════════════════════════════════════════════════════════
   // REPORT VIEW (shown for both evaluator revisiting and owner viewing)

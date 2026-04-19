@@ -11,7 +11,7 @@ import {
   Check,
   User,
 } from "lucide-react";
-import { getLoginUrl } from "@/const";
+import { Link } from "wouter";
 
 const AREAS = [
   { name: "Cirurgia Geral", count: 12 },
@@ -78,11 +78,11 @@ export function LandingPage() {
             <a href="#areas" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100">Áreas</a>
             <a href="#criteria" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100">Critérios</a>
           </nav>
-          <a href={getLoginUrl()}>
+          <Link href="/login">
             <button className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-sm font-medium hover:bg-[#1a1a2e]/90">
               Entrar
             </button>
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -107,12 +107,12 @@ export function LandingPage() {
                 Entrustable Professional Activities (EPAs) da American Board of Surgery.
               </p>
               <div className="flex flex-wrap gap-4">
-                <a href={getLoginUrl()}>
+                <Link href="/login">
                   <button className="px-6 py-3 bg-[#1a1a2e] text-white rounded-lg font-medium hover:bg-[#1a1a2e]/90 flex items-center gap-2">
                     Começar Agora
                     <ArrowRight className="h-4 w-4" />
                   </button>
-                </a>
+                </Link>
                 <button className="px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 flex items-center gap-2">
                   <Play className="h-4 w-4" />
                   Ver Demonstração
@@ -309,12 +309,12 @@ export function LandingPage() {
                 Crie sua conta gratuitamente e comece a avaliar seus procedimentos
                 cirúrgicos com critérios baseados nas EPAS da ABS.
               </p>
-              <a href={getLoginUrl()}>
+              <Link href="/login">
                 <button className="px-8 py-4 bg-white text-[#1a1a2e] rounded-lg font-semibold hover:bg-gray-100 flex items-center gap-2 mx-auto">
                   Criar Conta Gratuita
                   <ArrowRight className="h-4 w-4" />
                 </button>
-              </a>
+              </Link>
             </div>
             <div
               className="absolute inset-0 opacity-10"
