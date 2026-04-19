@@ -1,25 +1,11 @@
-import fs from "fs";
-import path from "path";
+import { v4 as uuidv4 } from "uuid";
 import type { Express, Request, Response } from "express";
 import multer from "multer";
-import { v4 as uuidv4 } from "uuid";
+import { uploadToGCS } from "./gcs-storage";
 
-// Diretório de uploads locais no servidor
-const UPLOADS_DIR = path.join(process.cwd(), "uploads", "videos");
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-}
+// Usamos memoryStorage pois o arquivo será repassado imediatamente para o GCS
+const storage = multer.memoryStorage();
 
-// Usa diskStorage para suportar arquivos grandes (>1GB) sem estourar a RAM
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, UPLOADS_DIR),
-  filename: (_req, file, cb) => {
-    const ext = file.originalname.split(".").pop() || "mp4";
-    cb(null, `${uuidv4()}.${ext}`);
-  }
-});
-
-// Filtro: apenas vídeos permitidos
 const fileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const allowedTypes = ["video/mp4", "video/webm", "video/ogg", "video/quicktime", "video/x-msvideo"];
   if (allowedTypes.includes(file.mimetype)) {
@@ -29,11 +15,17 @@ const fileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFil
   }
 };
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({ 
+  storage, 
+  fileFilter,
+  limits: {
+    fileSize: 500 * 1024 * 1024, // Limite inicial de 500MB via servidor (ideal usar Direct Upload para maiores)
+  }
+});
 
 export function registerUploadRoutes(app: Express) {
 
-  // POST /api/upload/:folderId — Upload de vídeo
+  // POST /api/upload/:folderId — Upload de vídeo para o GCS
   app.post(
     "/api/upload/:folderId",
     upload.single("video"),
@@ -43,72 +35,38 @@ export function registerUploadRoutes(app: Express) {
           return res.status(400).json({ error: "Nenhum arquivo enviado" });
         }
 
-        const filename = req.file.filename;
-        const url = `/api/videos/stream/${filename}`;
+        const ext = req.file.originalname.split(".").pop() || "mp4";
+        const filename = `videos/${uuidv4()}.${ext}`;
+        
+        console.log(`[Upload] Iniciando envio para GCS: ${filename}`);
+        
+        // Upload para o Google Cloud Storage
+        const result = await uploadToGCS(
+          req.file.buffer,
+          filename,
+          req.file.mimetype
+        );
+
+        // A URL retornada será usada para referência no banco de dados
+        // O streaming real será feito via Signed URL no router de vídeos
+        const videoUrl = `/api/videos/stream/${result.path}`;
 
         res.json({
           success: true,
           file: {
-            filename,
+            filename: result.path,
             originalName: req.file.originalname,
             mimeType: req.file.mimetype,
             size: req.file.size,
-            url,
-            path: url,
-            s3Key: filename,
+            url: videoUrl,
+            path: result.path,
+            s3Key: result.path,
           },
         });
       } catch (error) {
         console.error("Upload error:", error);
-        res.status(500).json({ error: "Erro ao fazer upload do vídeo" });
+        res.status(500).json({ error: "Erro ao fazer upload do vídeo para a nuvem" });
       }
     }
   );
-
-  // GET /api/videos/stream/:filename — Streaming seguro com HTTP 206 Range
-  app.get("/api/videos/stream/:filename", (req: Request, res: Response) => {
-    const filename = req.params.filename;
-
-    // Segurança: impedir path traversal
-    if (filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
-      return res.status(400).send("Nome de arquivo inválido.");
-    }
-
-    const filePath = path.join(UPLOADS_DIR, filename);
-
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).send("Vídeo não encontrado.");
-    }
-
-    const stat = fs.statSync(filePath);
-    const fileSize = stat.size;
-    const range = req.headers.range;
-
-    // Cabeçalhos de segurança para vídeos médicos
-    res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
-
-    if (range) {
-      // Streaming em chunks (vital para arquivos grandes)
-      const parts = range.replace(/bytes=/, "").split("-");
-      const start = parseInt(parts[0], 10);
-      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-      const chunksize = end - start + 1;
-      const file = fs.createReadStream(filePath, { start, end });
-
-      res.writeHead(206, {
-        "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": chunksize,
-        "Content-Type": "video/mp4",
-      });
-      file.pipe(res);
-    } else {
-      res.writeHead(200, {
-        "Content-Length": fileSize,
-        "Content-Type": "video/mp4",
-      });
-      fs.createReadStream(filePath).pipe(res);
-    }
-  });
 }

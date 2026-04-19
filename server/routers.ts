@@ -50,6 +50,7 @@ import {
 } from "./db";
 
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
+import { getSignedStreamUrl } from "./gcs-storage";
 import {
   AREA_LABELS,
   ENTRUSTMENT_LEVELS,
@@ -245,7 +246,21 @@ export const appRouter = router({
       .input(z.object({ folderId: z.number() }))
       .query(async ({ ctx, input }) => {
         await assertFolderAccess(input.folderId, ctx.user.id);
-        return getVideosByFolder(input.folderId);
+        const videosList = await getVideosByFolder(input.folderId);
+        
+        // Em produção, gera URLs assinadas para todos os vídeos da lista
+        return Promise.all(videosList.map(async (v) => {
+          if (v.path && process.env.NODE_ENV === "production") {
+            try {
+              const signedUrl = await getSignedStreamUrl(v.path);
+              return { ...v, url: signedUrl };
+            } catch (err) {
+              console.error(`Erro ao gerar URL para vídeo ${v.id}:`, err);
+              return v;
+            }
+          }
+          return v;
+        }));
       }),
 
     get: protectedProcedure
@@ -255,6 +270,17 @@ export const appRouter = router({
         if (!video) throw new TRPCError({ code: "NOT_FOUND" });
         await assertFolderAccess(video.folderId, ctx.user.id);
         const myEval = await getEvaluationByVideoAndUser(video.id, ctx.user.id);
+
+        // Gera URL assinada para o vídeo específico
+        if (video.path && process.env.NODE_ENV === "production") {
+          try {
+            const signedUrl = await getSignedStreamUrl(video.path);
+            video.url = signedUrl;
+          } catch (err) {
+            console.error(`Erro ao gerar URL assinada:`, err);
+          }
+        }
+
         return { video, myEvaluation: myEval ?? null };
       }),
 

@@ -35,7 +35,7 @@ jobs:
             --add-cloudsql-instances ${{ env.PROJECT_ID }}:us-central1:videosurgery-db \
             --port 3000 \
             --set-env-vars "NODE_ENV=production,JWT_SECRET=${{ secrets.JWT_SECRET }},VITE_APP_ID=videosurgery-epa,DATABASE_URL=mysql://root:VideoSurgery2025@/videosurgery?socketPath=/cloudsql/${{ env.PROJECT_ID }}:us-central1:videosurgery-db,GOOGLE_CLOUD_PROJECT=${{ env.PROJECT_ID }},GCS_BUCKET=${{ env.PROJECT_ID }}-videos" \
-            --memory 512Mi \
+            --memory 1Gi \
             --cpu 1 \
             --min-instances 0 \
             --max-instances 3 \
