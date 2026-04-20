@@ -73,18 +73,26 @@ export function registerAuthRoutes(app: Express) {
         return;
       }
 
-      const fallbackEmail = email ?? "ale@videosurgery.com";
-      const fallbackProvider = provider || "local";
-      const fallbackOpenId = getFallbackOpenId(fallbackEmail, fallbackProvider);
-      const fallbackName = inferNameFromEmail(fallbackEmail);
-      const fallbackRole = fallbackEmail === "ale@videosurgery.com" ? "admin" : undefined;
+      if (!email) {
+        const loginUrl = new URL("/login", `${req.protocol}://${req.get("host")}`);
+        loginUrl.searchParams.set("error", "email_required");
+        loginUrl.searchParams.set("returnPath", returnPath);
+        if (provider) {
+          loginUrl.searchParams.set("provider", provider);
+        }
+        res.redirect(302, loginUrl.toString());
+        return;
+      }
+
+      const fallbackProvider = provider || "email";
+      const fallbackOpenId = getFallbackOpenId(email, fallbackProvider);
+      const fallbackName = inferNameFromEmail(email);
 
       await createLocalSession(req, res, {
         openId: fallbackOpenId,
-        email: fallbackEmail,
+        email,
         name: fallbackName,
         loginMethod: fallbackProvider,
-        role: fallbackRole,
         returnPath,
       });
     } catch (error) {

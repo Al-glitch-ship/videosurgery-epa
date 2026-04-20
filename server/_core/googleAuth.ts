@@ -103,11 +103,13 @@ export function decodeAuthState(value?: string) {
 
 export async function buildGoogleAuthorizationUrl(req: Request, state: AuthState) {
   const client = createGoogleClient(req);
+  const emailHint = state.emailHint?.trim() || undefined;
 
   return client.generateAuthUrl({
     access_type: "offline",
     include_granted_scopes: true,
-    prompt: "consent",
+    prompt: "select_account consent",
+    login_hint: emailHint,
     response_type: "code",
     scope: ["openid", "email", "profile"],
     state: encodeAuthState(state),

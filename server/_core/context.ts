@@ -3,6 +3,8 @@ import type { User } from "../../drizzle/schema";
 import { COOKIE_NAME } from "@shared/const";
 import * as db from "../db";
 import { sdk } from "./sdk";
+import { ENV } from "./env";
+import { isGoogleOAuthConfigured } from "./googleAuth";
 
 export type TrpcContext = {
   req: CreateExpressContextOptions["req"];
@@ -36,7 +38,12 @@ export async function createContext(
     if (sessionCookie) {
       const session = await sdk.verifySession(sessionCookie);
       if (session) {
-        user = (await db.getUserByOpenId(session.openId)) ?? null;
+        const isLegacyLocalSession =
+          ENV.isProduction && isGoogleOAuthConfigured() && session.openId.startsWith("local:");
+
+        if (!isLegacyLocalSession) {
+          user = (await db.getUserByOpenId(session.openId)) ?? null;
+        }
       }
     }
   } catch (error) {

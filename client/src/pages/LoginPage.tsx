@@ -33,6 +33,9 @@ export function LoginPage() {
   const { user, isLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
+  const authParams = new URLSearchParams(window.location.search);
+  const authError = authParams.get("error");
+  const returnPath = authParams.get("returnPath") || "/dashboard";
 
   useEffect(() => {
     if (!isLoading && user) {
@@ -42,7 +45,7 @@ export function LoginPage() {
 
   const beginLogin = (provider?: string) => {
     setIsVerifying(true);
-    const destination = getLoginUrl("/dashboard", {
+    const destination = getLoginUrl(returnPath, {
       email,
       provider: provider ?? undefined,
     });
@@ -116,6 +119,12 @@ export function LoginPage() {
               onChange={(event) => setEmail(event.target.value)}
               className="h-[34px] w-full rounded-[3px] border border-[#eceae7] bg-white px-3 text-[11px] text-[#2a2a2a] outline-none placeholder:text-[#b7b1ab] focus:border-[#d8d4cf]"
             />
+
+            {authError === "email_required" && (
+              <div className="mt-2 rounded-[3px] border border-amber-200 bg-amber-50 px-3 py-2 text-[10px] text-amber-800">
+                Informe seu e-mail para continuar enquanto o login federado estiver indisponível neste ambiente.
+              </div>
+            )}
 
             <div
               className={`mt-3 rounded-[3px] border border-[#eceae7] bg-[#fbfaf8] px-3 py-3 transition-opacity duration-300 ${
