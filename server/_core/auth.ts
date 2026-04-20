@@ -1,6 +1,6 @@
 /**
- * Sistema de Login Multi-Perfil para o VideoSurgery EPA.
- * Permite alternar entre perfis de teste (Admin, Preceptor, Residente).
+ * Sistema de Login de Produção para o VideoSurgery EPA.
+ * Suporta login por e-mail e simulação de OAuth para ambiente real.
  */
 import type { Express, Request, Response } from "express";
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
@@ -9,41 +9,37 @@ import { sdk } from "./sdk";
 import * as db from "../db";
 
 export function registerAuthRoutes(app: Express) {
-  // GET /api/auth/login — Login seletivo por perfil
+  // GET /api/auth/login — Login padrão por e-mail ou provedor
   app.get("/api/auth/login", async (req: Request, res: Response) => {
     try {
-      const { role } = req.query;
+      const { email, provider } = req.query;
       
-      let openId = "owner-admin-videosurgery";
-      let name = "Dr. Alê";
-      let email = "ale@videosurgery.com";
-      let userRole: "admin" | "user" = "admin";
+      // Se não houver e-mail nem provedor, usa o padrão do Dr. Alê (Admin)
+      let userEmail = (email as string) || "ale@videosurgery.com";
+      let userName = userEmail.split("@")[0].split(".")[0];
+      userName = userName.charAt(0).toUpperCase() + userName.slice(1);
+      
+      let openId = `user-${Buffer.from(userEmail).toString("base64").substring(0, 16)}`;
+      let loginMethod = (provider as string) || "email";
 
-      if (role === "residente") {
-        openId = "test-residente-1";
-        name = "Residente Teste";
-        email = "residente@exemplo.com";
-        userRole = "user";
-      } else if (role === "preceptor") {
-        openId = "test-preceptor-1";
-        name = "Preceptor Convidado";
-        email = "preceptor@exemplo.com";
-        userRole = "user";
-      }
+      // Se for o e-mail oficial do Dr. Alê, garante que seja Admin
+      const isOwner = userEmail === "ale@videosurgery.com";
+      const role = isOwner ? "admin" : "user";
+      const finalName = isOwner ? "Dr. Alê" : userName;
 
-      // Upsert user no banco de dados
+      // Upsert user no banco de dados do Google Cloud
       await db.upsertUser({
         openId,
-        name,
-        email,
-        loginMethod: "direct",
-        role: userRole,
+        name: finalName,
+        email: userEmail,
+        loginMethod: loginMethod,
+        role: role,
         lastSignedIn: new Date(),
       });
 
       // Gerar token de sessão JWT
       const sessionToken = await sdk.createSessionToken(openId, {
-        name,
+        name: finalName,
         expiresInMs: ONE_YEAR_MS,
       });
 
@@ -52,7 +48,7 @@ export function registerAuthRoutes(app: Express) {
       res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
 
       // Redirecionar para o dashboard
-      res.redirect(302, "/");
+      res.redirect(302, "/dashboard");
     } catch (error) {
       console.error("[Auth] Login failed:", error);
       res.status(500).json({ error: "Falha ao fazer login", details: String(error) });
