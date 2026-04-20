@@ -269,10 +269,10 @@ export const appRouter = router({
         
         // Em produção, gera URLs assinadas para todos os vídeos da lista
         return Promise.all(videosList.map(async (v) => {
-          if (v.path && process.env.NODE_ENV === "production") {
+          if (v.localPath && process.env.NODE_ENV === "production") {
             try {
-              const signedUrl = await getSignedStreamUrl(v.path);
-              return { ...v, url: signedUrl };
+              const signedUrl = await getSignedStreamUrl(v.localPath);
+              return { ...v, s3Url: signedUrl };
             } catch (err) {
               console.error(`Erro ao gerar URL para vídeo ${v.id}:`, err);
               return v;
@@ -291,10 +291,10 @@ export const appRouter = router({
         const myEval = await getEvaluationByVideoAndUser(video.id, ctx.user.id);
 
         // Gera URL assinada para o vídeo específico
-        if (video.path && process.env.NODE_ENV === "production") {
+        if (video.localPath && process.env.NODE_ENV === "production") {
           try {
-            const signedUrl = await getSignedStreamUrl(video.path);
-            video.url = signedUrl;
+            const signedUrl = await getSignedStreamUrl(video.localPath);
+            video.s3Url = signedUrl;
           } catch (err) {
             console.error(`Erro ao gerar URL assinada:`, err);
           }

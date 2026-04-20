@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { queryClient } from "@/lib/query-client";
 
@@ -18,35 +18,30 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { data, isLoading } = trpc.auth.me.useQuery(undefined, {
+  const meQuery = trpc.auth.me.useQuery(undefined, {
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    if (data) {
-      setUser(data as User);
-    }
-  }, [data]);
-
   const logoutMutation = trpc.auth.logout.useMutation({
-    onSuccess: () => {
-      setUser(null);
-      queryClient.clear();
-      window.location.href = "/";
+    onSuccess: async () => {
+      await queryClient.invalidateQueries();
+      window.location.href = "/login";
     },
   });
 
-  const logout = async () => {
-    await logoutMutation.mutateAsync();
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, isLoading, logout }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo<AuthContextType>(
+    () => ({
+      user: (meQuery.data as User | null | undefined) ?? null,
+      isLoading: meQuery.isLoading || logoutMutation.isPending,
+      logout: async () => {
+        await logoutMutation.mutateAsync();
+      },
+    }),
+    [logoutMutation, meQuery.data, meQuery.isLoading],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

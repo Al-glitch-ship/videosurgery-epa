@@ -43,7 +43,7 @@ const _mockTopicCriteria: any[] = [];
 const _mockNotifications: any[] = [];
 
 // ─── DB connection ───────────────────────────────────────────────────────────
-let _db: ReturnType<typeof drizzle> | null = null;
+let _db: any = null;
 
 export async function getDb() {
   if (IS_DEV_NO_DB) return null;
@@ -85,8 +85,30 @@ async function db() {
 
 // ─── Users ────────────────────────────────────────────────────────────────────
 export async function upsertUser(user: InsertUser): Promise<void> {
-  if (IS_DEV_NO_DB) return;
   if (!user.openId) throw new Error("User openId is required for upsert");
+
+  if (IS_DEV_NO_DB) {
+    const existingIndex = _mockUsers.findIndex((entry) => entry.openId === user.openId);
+    const existing = existingIndex >= 0 ? _mockUsers[existingIndex] : null;
+    const record = {
+      id: existing?.id ?? nextId(),
+      openId: user.openId,
+      name: user.name ?? existing?.name ?? null,
+      email: user.email ?? existing?.email ?? null,
+      loginMethod: user.loginMethod ?? existing?.loginMethod ?? null,
+      role: user.role ?? existing?.role ?? (user.openId === ENV.ownerOpenId ? "admin" : "user"),
+      lastSignedIn: user.lastSignedIn ?? now(),
+      createdAt: existing?.createdAt ?? now(),
+      updatedAt: now(),
+    };
+
+    if (existingIndex >= 0) {
+      _mockUsers[existingIndex] = record;
+    } else {
+      _mockUsers.push(record);
+    }
+    return;
+  }
 
   const d = await db();
   const values: InsertUser = { openId: user.openId };
@@ -265,7 +287,7 @@ export async function getSharedFolders(userId: number): Promise<Folder[]> {
     .from(folderAccess)
     .where(eq(folderAccess.userId, userId));
   if (access.length === 0) return [];
-  const folderIds = access.map((a) => a.folderId);
+  const folderIds = access.map((a: typeof access[number]) => a.folderId);
   return d
     .select()
     .from(folders)
@@ -582,7 +604,7 @@ export async function getEvaluationsByArea(area: string): Promise<Evaluation[]> 
     .from(folders)
     .where(eq(folders.area, area));
   if (areaFolders.length === 0) return [];
-  const ids = areaFolders.map((f) => f.id);
+  const ids = areaFolders.map((f: typeof areaFolders[number]) => f.id);
   return d
     .select()
     .from(evaluations)

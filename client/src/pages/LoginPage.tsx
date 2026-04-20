@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
+import { getLoginUrl } from "@/const";
 import { useAuth } from "@/contexts/AuthContext";
 
 const providers = [
@@ -15,10 +16,10 @@ function MetaFooter() {
       <div className="text-[11px] font-medium text-neutral-700">from</div>
       <div className="text-lg font-semibold tracking-tight text-neutral-900">∞Meta</div>
       <div className="flex items-center gap-3 underline-offset-2">
-        <a href="#" className="hover:text-neutral-700 hover:underline">
+        <a href="https://www.facebook.com/terms.php" className="hover:text-neutral-700 hover:underline">
           Terms of service
         </a>
-        <a href="#" className="hover:text-neutral-700 hover:underline">
+        <a href="https://www.facebook.com/privacy/policy" className="hover:text-neutral-700 hover:underline">
           Privacy policy
         </a>
         <span>©2026 Meta</span>
@@ -39,20 +40,18 @@ export function LoginPage() {
     }
   }, [isLoading, navigate, user]);
 
-  const handleLogin = (provider?: string) => {
+  const beginLogin = (provider?: string) => {
     setIsVerifying(true);
-    // Simula um delay de verificação como no clone
-    setTimeout(() => {
-      const url = new URL("/api/auth/login", window.location.origin);
-      if (email) url.searchParams.set("email", email);
-      if (provider) url.searchParams.set("provider", provider);
-      window.location.href = url.toString();
-    }, 800);
+    const destination = getLoginUrl("/dashboard", {
+      email,
+      provider: provider ?? undefined,
+    });
+
+    window.location.href = destination;
   };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#f8f8f6] text-neutral-950 font-sans">
-      {/* Background Grid */}
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-80"
@@ -76,7 +75,6 @@ export function LoginPage() {
 
         <div className="w-full max-w-[316px] rounded-[3px] border border-black/5 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.06)]">
           <div className="px-4 pb-4 pt-7">
-            {/* Logo Icon */}
             <div className="mx-auto mb-5 flex h-9 w-9 items-center justify-center rounded-[10px] border border-black bg-black text-base font-semibold text-white shadow-[0_8px_20px_rgba(0,0,0,0.12)]">
               ▢
             </div>
@@ -87,16 +85,18 @@ export function LoginPage() {
               </h1>
             </div>
 
-            {/* Social Providers */}
             <div className="space-y-2.5">
               {providers.map((provider) => (
                 <button
                   key={provider.id}
                   type="button"
-                  onClick={() => handleLogin(provider.id)}
+                  onClick={() => beginLogin(provider.id)}
                   className="flex h-[34px] w-full items-center rounded-[3px] border border-[#eceae7] bg-white px-3 text-left text-[11px] text-[#222] transition hover:border-[#dedad5] hover:bg-[#fcfcfb]"
                 >
-                  <span className="mr-3 inline-flex w-4 shrink-0 items-center justify-center text-[12px] font-semibold" style={{ color: provider.color }}>
+                  <span
+                    className="mr-3 inline-flex w-4 shrink-0 items-center justify-center text-[12px] font-semibold"
+                    style={{ color: provider.color }}
+                  >
                     {provider.icon}
                   </span>
                   <span className="leading-none">{provider.label}</span>
@@ -106,7 +106,6 @@ export function LoginPage() {
 
             <div className="my-4 h-px bg-[#f0efed]" />
 
-            {/* Email Input */}
             <label className="mb-2 block text-[10px] font-medium uppercase tracking-[0.18em] text-[#9a948d]">
               Access email
             </label>
@@ -114,15 +113,22 @@ export function LoginPage() {
               type="email"
               placeholder="Enter your email address"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               className="h-[34px] w-full rounded-[3px] border border-[#eceae7] bg-white px-3 text-[11px] text-[#2a2a2a] outline-none placeholder:text-[#b7b1ab] focus:border-[#d8d4cf]"
             />
 
-            {/* Verification Status */}
-            <div className={`mt-3 rounded-[3px] border border-[#eceae7] bg-[#fbfaf8] px-3 py-3 transition-opacity duration-300 ${isVerifying ? "opacity-100" : "opacity-40"}`}>
+            <div
+              className={`mt-3 rounded-[3px] border border-[#eceae7] bg-[#fbfaf8] px-3 py-3 transition-opacity duration-300 ${
+                isVerifying ? "opacity-100" : "opacity-40"
+              }`}
+            >
               <div className="flex items-center justify-between gap-3 text-[11px] text-[#5d5d5d]">
                 <div className="flex items-center gap-2.5">
-                  <span className={`inline-flex h-4 w-4 items-center justify-center rounded-full border border-[#d7d7d7] text-[10px] text-[#7c7c7c] ${isVerifying ? "animate-pulse" : ""}`}>
+                  <span
+                    className={`inline-flex h-4 w-4 items-center justify-center rounded-full border border-[#d7d7d7] text-[10px] text-[#7c7c7c] ${
+                      isVerifying ? "animate-pulse" : ""
+                    }`}
+                  >
                     ✓
                   </span>
                   <span>{isVerifying ? "Verifying access..." : "Ready for sign in"}</span>
@@ -133,10 +139,9 @@ export function LoginPage() {
               </div>
             </div>
 
-            {/* Continue Button */}
             <button
               type="button"
-              onClick={() => handleLogin()}
+              onClick={() => beginLogin()}
               disabled={isVerifying}
               className="mt-4 h-[35px] w-full rounded-[4px] bg-[#8d8b88] text-[11px] font-medium text-white transition hover:bg-[#797774] disabled:opacity-50"
             >
@@ -145,7 +150,7 @@ export function LoginPage() {
           </div>
 
           <div className="border-t border-[#f1efed] px-4 py-3 text-center text-[10px] text-[#97918a]">
-            Powered by Manus
+            Powered by Google Cloud
           </div>
         </div>
 

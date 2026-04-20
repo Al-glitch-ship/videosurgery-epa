@@ -1,23 +1,33 @@
-export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+const DEFAULT_RETURN_PATH = "/dashboard";
 
-// Generate login URL at runtime so redirect URI reflects the current origin.
-export const getLoginUrl = () => {
-  const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
-  const appId = import.meta.env.VITE_APP_ID;
-  
-  // Se não houver OAuth configurado, usa a rota de auto-login
-  if (!oauthPortalUrl) {
-    return "/api/auth/login";
+function normalizeReturnPath(returnPath?: string | null) {
+  if (!returnPath) {
+    return DEFAULT_RETURN_PATH;
   }
 
-  const redirectUri = `${window.location.origin}/api/oauth/callback`;
-  const state = btoa(redirectUri);
+  if (!returnPath.startsWith("/") || returnPath.startsWith("//")) {
+    return DEFAULT_RETURN_PATH;
+  }
 
-  const url = new URL(`${oauthPortalUrl}/app-auth`);
-  url.searchParams.set("appId", appId);
-  url.searchParams.set("redirectUri", redirectUri);
-  url.searchParams.set("state", state);
-  url.searchParams.set("type", "signIn");
+  return returnPath;
+}
+
+export const getLoginUrl = (
+  returnPath?: string,
+  options?: { email?: string | null; provider?: string | null },
+) => {
+  const url = new URL("/api/auth/login", window.location.origin);
+  url.searchParams.set("returnPath", normalizeReturnPath(returnPath));
+
+  const email = options?.email?.trim();
+  if (email) {
+    url.searchParams.set("email", email);
+  }
+
+  const provider = options?.provider?.trim();
+  if (provider) {
+    url.searchParams.set("provider", provider);
+  }
 
   return url.toString();
 };
